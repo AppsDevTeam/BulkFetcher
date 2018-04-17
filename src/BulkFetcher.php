@@ -23,6 +23,11 @@ class BulkFetcher extends \Nette\Object implements \Iterator {
 
 	protected $offset;
 
+	/**
+	 * @var array
+	 */
+	public $onBeforeLoadNewData = [];
+
 	public function __construct(\Kdyby\Doctrine\ResultSet $resultSet, $bulkCount = 100) {
 		$this->resultSet = $resultSet;
 		$this->limit = $bulkCount;
@@ -61,6 +66,8 @@ class BulkFetcher extends \Nette\Object implements \Iterator {
 	}
 
 	protected function loadNewData() {
+		$this->onBeforeLoadNewData();
+
 		$this->bulkDataIndex = 0;
 		$this->bulkData = $this->resultSet
 			->applyPaging($this->offset, $this->limit)
