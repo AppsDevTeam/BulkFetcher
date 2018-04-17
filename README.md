@@ -8,8 +8,15 @@ via composer:
 composer require adt/bulk-fetcher
 ```
 
-## Usage
+## Full example
 
-foreach (new \ADT\BulkFetcher($resultSet, 100) as $key => $value) {
+```php
+$bulkedResultSet = new \ADT\BulkFetcher($resultSet, 100);
+$bulkedResultSet->onBeforeLoadNewData[] = function() use ($entityManager) {
+	$entityManager->clear();
+};
+
+foreach ($bulkedResultSet as $key => $row) {
 	// code
 }
+```
