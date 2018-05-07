@@ -1,4 +1,9 @@
-#
+# BulkFetcher
+
+`\ADT\BulkFetcher\Factory` can be used with:
+
+ - `\Kdyby\Doctrine\ResultSet`
+ - `\Kdyby\Doctrine\NativeQueryBuilder`
 
 ## Installation
 
@@ -10,13 +15,30 @@ composer require adt/bulk-fetcher
 
 ## Full example
 
-```php
-$bulkedResultSet = new \ADT\BulkFetcher($resultSet, 100);
-$bulkedResultSet->onBeforeLoadNewData[] = function() use ($entityManager) {
-	$entityManager->clear();
-};
+Whole batch is in transaction.
 
-foreach ($bulkedResultSet as $key => $row) {
-	// code
+```php
+
+$qb = $entityManager->createQueryBuilder('user');
+
+try {
+	$entityManager->beginTransaction();	
+	
+	$data = \ADT\BulkFetcher\Factory::create($qb, 100);
+	$data->onBeforeFetch[] = function() use ($entityManager) {
+		$entityManager->commit();
+		$entityManager->clear();
+		$entityManager->beginTransaction();
+	};
+	
+	foreach ($data as $key => $row) {
+		// code
+	}
+	
+	$entityManager->commit();
+
+} catch (\Exception $e) {
+	$entityManager->rollback();
+	throw $e;
 }
 ```
