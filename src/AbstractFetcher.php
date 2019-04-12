@@ -2,7 +2,9 @@
 
 namespace ADT\BulkFetcher;
 
-abstract class AbstractFetcher extends \Nette\Object implements \Iterator {
+abstract class AbstractFetcher implements \Iterator {
+
+	use \Nette\SmartObject;
 
 	/**
 	 * Fetched data
