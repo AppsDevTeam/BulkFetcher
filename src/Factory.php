@@ -20,6 +20,10 @@ class Factory
 			case $dataProvider instanceof \Kdyby\Doctrine\NativeQueryBuilder:
 				return new NativeQueryBuilderFetcher($dataProvider, $batch);
 				break;
+
+			case $dataProvider instanceof \Doctrine\ORM\QueryBuilder:
+				return new QueryBuilderFetcher($dataProvider, $batch);
+				break;
 		}
 	}
 

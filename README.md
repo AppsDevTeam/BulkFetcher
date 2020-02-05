@@ -3,6 +3,7 @@
 `\ADT\BulkFetcher\Factory` can be used with:
 
  - `\Kdyby\Doctrine\ResultSet`
+ - `\Doctrine\ORM\QueryBuilder`
  - `\Kdyby\Doctrine\NativeQueryBuilder`
 
 ## Installation
