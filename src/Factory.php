@@ -2,11 +2,13 @@
 
 namespace ADT\BulkFetcher;
 
+use Doctrine\ORM\Query;
+
 class Factory
 {
 
 	/**
-	 * @param \Kdyby\Doctrine\NativeQueryBuilder|\Kdyby\Doctrine\ResultSet $dataProvider
+	 * @param \Kdyby\Doctrine\NativeQueryBuilder|\Kdyby\Doctrine\ResultSet|Query $dataProvider
 	 * @param int $batch
 	 * @return NativeQueryBuilderFetcher|ResultSetFetcher
 	 */
@@ -23,6 +25,10 @@ class Factory
 
 			case $dataProvider instanceof \Doctrine\ORM\QueryBuilder:
 				return new QueryBuilderFetcher($dataProvider, $batch);
+				break;
+
+			case $dataProvider instanceof Query:
+				return new QueryFetcher($dataProvider, $batch);
 				break;
 		}
 	}
