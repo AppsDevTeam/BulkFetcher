@@ -8,7 +8,7 @@ class Factory
 {
 
 	/**
-	 * @param \Kdyby\Doctrine\NativeQueryBuilder|\Kdyby\Doctrine\ResultSet|Query $dataProvider
+	 * @param \Kdyby\Doctrine\NativeQueryBuilder|\Kdyby\Doctrine\ResultSet|\Doctrine\ORM\QueryBuilder|Query $dataProvider
 	 * @param int $batch
 	 * @return NativeQueryBuilderFetcher|ResultSetFetcher
 	 */
