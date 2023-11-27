@@ -2,7 +2,6 @@
 
 namespace ADT\BulkFetcher;
 
-use App\Utils;
 use Kdyby\Doctrine\Dql\InlineParamsBuilder;
 use Kdyby\Doctrine\NativeQueryBuilder;
 
@@ -47,7 +46,7 @@ class QueryBuilderFetcher extends AbstractFetcher {
 
 		$this->qb->andWhere("{$this->entityIdentifierColumn} > :".static::param($this->entityIdentifierColumn));
 
-		$this->qb->addOrderBy("{$this->entityIdentifierColumn}", 'ASC');
+		$this->qb->orderBy("{$this->entityIdentifierColumn}", 'ASC');
 	}
 
 	protected function loadNewData() {
@@ -92,7 +91,7 @@ class QueryBuilderFetcher extends AbstractFetcher {
 					: $columnName
 			);
 
-			$this->lastRowData[$columnName] = Utils::accessNestedObjectPropertyByString($propertyName, $lastRow);
+			$this->lastRowData[$columnName] = self::accessNestedObjectPropertyByString($propertyName, $lastRow);
 		}
 
 
@@ -105,5 +104,15 @@ class QueryBuilderFetcher extends AbstractFetcher {
 		return 'QueryBuilderFetcher_' . str_replace('.', '__', $param);
 	}
 
+	public static function accessNestedObjectPropertyByString($property, $object) 
+	{
+		$steps = explode("->", $property);
+
+		foreach ($steps as $step) {
+			$object = $object->{'get' . ucfirst($step)}();
+		}
+
+		return $object;
+	}
 }
 

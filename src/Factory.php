@@ -6,7 +6,7 @@ class Factory
 {
 
 	/**
-	 * @param \Kdyby\Doctrine\NativeQueryBuilder|\Kdyby\Doctrine\ResultSet $dataProvider
+	 * @param \Kdyby\Doctrine\NativeQueryBuilder|\Kdyby\Doctrine\ResultSet|\Doctrine\ORM\QueryBuilder $dataProvider
 	 * @param int $batch
 	 * @return NativeQueryBuilderFetcher|ResultSetFetcher
 	 */

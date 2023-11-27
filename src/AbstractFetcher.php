@@ -27,24 +27,29 @@ abstract class AbstractFetcher implements \Iterator {
 	 */
 	public $onBeforeFetch = [];
 
-	public function __construct($batch = 100) {
+	public function __construct($batch = 100)
+	{
 		$this->limit = $batch;
 	}
 
-	public function rewind() {
+	public function rewind(): void
+	{
 		$this->offset = 0;
 		$this->fetch();
 	}
 
-	public function current() {
+	public function current(): mixed
+	{
 		return current($this->data);
 	}
 
-	public function key() {
+	public function key(): mixed
+	{
 		return key($this->data);
 	}
 
-	public function next() {
+	public function next(): void
+	{
 		$this->dataIndex++;
 
 		if (next($this->data) === FALSE) {
@@ -59,11 +64,13 @@ abstract class AbstractFetcher implements \Iterator {
 		}
 	}
 
-	public function valid() {
+	public function valid(): bool
+	{
 		return current($this->data) !== FALSE;
 	}
 
-	protected function fetch() {
+	protected function fetch()
+	{
 		$this->onBeforeFetch();
 
 		$this->dataIndex = 0;
