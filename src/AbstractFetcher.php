@@ -69,7 +69,7 @@ abstract class AbstractFetcher implements \Iterator {
 		return current($this->data) !== FALSE;
 	}
 
-	protected function fetch()
+	protected function fetch(): void
 	{
 		$this->onBeforeFetch();
 
