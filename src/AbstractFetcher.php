@@ -22,6 +22,8 @@ abstract class AbstractFetcher implements \Iterator {
 
 	protected $offset;
 
+	protected $disableOffset = false;
+
 	/**
 	 * @var array
 	 */
@@ -30,6 +32,11 @@ abstract class AbstractFetcher implements \Iterator {
 	public function __construct($batch = 100)
 	{
 		$this->limit = $batch;
+	}
+
+	public function disableOffset(): self {
+		$this->disableOffset = true;
+		return $this;
 	}
 
 	public function rewind(): void
@@ -58,7 +65,9 @@ abstract class AbstractFetcher implements \Iterator {
 			if ($this->dataIndex === $this->limit) {
 				// maybe we have more data
 
-				$this->offset += $this->limit;	// next bulk
+				if (!$this->disableOffset) {
+					$this->offset += $this->limit; // next bulk
+				}
 				$this->fetch();
 			}
 		}
